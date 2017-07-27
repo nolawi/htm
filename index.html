@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+   
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title>Champs Multiselect Create Tree Prototylope</title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.mobile.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+    <style type="text/css" media="screen">
+    #example {
+        width: 800px;
+        margin: 50px auto;
+    }
+        
+    </style>
+
+</head>
+<body>
+<div id="example" role="application">
+    <div class="demo-section k-content">
+        <h2>Build Tree</h2>
+        <label for="required">Brands</label>
+        <select id="required" multiple="multiple" data-placeholder="Select Brand...">
+            <option>KFC</option>
+            <option>Pizza Hut</option>
+            <option selected>Taco Bell</option>
+        </select>
+        <label for="BMM">BMU</label>
+  
+        <select id="optional" multiple="multiple" data-placeholder="Select attendees...">
+             <option>BMU2</option>
+            <option>BMU3</option>
+            <option>BMU4</option>
+            <option>BMU5</option>
+            <option>BMU6</option>
+            <option>BMU7</option>
+        </select>   
+    
+
+
+ 
+        <h4>Example of Grouping (dummy data)</h4>
+        <select id="customers"></select>
+    </div>
+        <button class="k-button" id="get">Build Chart</button>
+</div>
+    <script>
+        $(document).ready(function() {
+            $("#customers").kendoMultiSelect({
+                placeholder: "Select with Group view",
+                dataTextField: "ContactName",
+                dataValueField: "CustomerID",
+                height: 400,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                    },
+                    group: { field: "Country" }
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .demo-section label {
+            display: block;
+            margin: 15px 0 5px 0;
+        }
+        #get {
+            float: right;
+            margin: 25px auto 0;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            // create MultiSelect from select HTML element
+            var required = $("#required").kendoMultiSelect().data("kendoMultiSelect");
+            var optional = $("#optional").kendoMultiSelect({
+                autoClose: false
+            }).data("kendoMultiSelect");
+
+            $("#get").click(function() {
+                alert("Attendees:\n\nRequired: " + required.value() + "\nOptional: " + optional.value());
+            });
+        });
+    </script>
+</div>
+
+
+</body>
+</html>
